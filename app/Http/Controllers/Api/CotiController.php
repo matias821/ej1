@@ -6,17 +6,32 @@ use App\Models\Cotizacion;
 use App\Models\user;
 use DB;
 use Exception;
+use GuzzleHttp;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+//use Nyholm\Psr7\Request;
 
 class CotiController extends Controller
 {
     public function index ()
     {
-        if ($this->role(auth()->user()->id) == 'Profesional') {
-            $cotizaciones=DB::table('cotizaciones')->where('profesional_id', auth()->user()->id)->get();
-        }else{
-            $cotizaciones=DB::table('cotizaciones')->where('particular_id', auth()->user()->id)->get();
+        $msg='';$status=0;
+        try{
+            if ($this->role(auth()->user()->id) == 'Profesional') {
+                $cotizaciones=DB::table('cotizaciones')->where('profesional_id', auth()->user()->id)->get();
+            }else{
+                $cotizaciones=DB::table('cotizaciones')->where('particular_id', auth()->user()->id)->get();
+            }
+            $status=1;
+        } catch (Exception $e) {
+            $cotizaciones='No se obtuvieron resultados.';
         }
-        return $cotizaciones;
+        $result=[
+            'status'=>$status,
+            'msg'=>'' . $msg,
+            'data'=> response()->json([$cotizaciones])
+        ];
+        return $result;
     }
 
     public function role($id)
@@ -46,6 +61,7 @@ class CotiController extends Controller
             $coti->particular_id    = auth()->user()->id;
             $coti->profesional_id   = $request->profesional_id;
             $coti->estado_id        = '1';
+            $coti->num_ip           = $_SERVER['REMOTE_ADDR'];
             $coti->save();
         }else{
             $result=[
@@ -56,6 +72,28 @@ class CotiController extends Controller
         }
         return $result;
     }
+
+
+    public function cotiGeo(Request $request){
+        $coti=Cotizacion::find($request->cotizacion_id);
+        if (isset($coti->num_ip)){
+            $response = Http::get('http://ipwho.is/' . $coti->num_ip);
+            $datos=$response->object();
+        }else{
+           $datos='No fue detectado ip para esta solicitud';
+        }
+
+
+
+
+        $result=[
+            'status'=>1,
+            'msg'=>'Solicitud recibida',
+            'data'=>$datos
+        ];
+        return $result;
+    }
+
 
     public function show($id)
     {
