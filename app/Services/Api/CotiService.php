@@ -30,8 +30,8 @@ class CotiService extends Controller
 
     public function store($request)
     {
-        $repo_result=$this->cotiRepository->guardar($request);
-        return $repo_result;
+        return $this->cotiRepository->guardar($request);
+
     }
 
     public function show($id)
@@ -52,14 +52,13 @@ class CotiService extends Controller
             'status'=>1,
             'msg'=>'correcto'
         ];
-        $result=$this->cotiRepository->update($request,$id);
-        return $result;
+        return $this->cotiRepository->update($request,$id);
+
 
     }
     public function Destroy($id)
     {
-        $result=$this->cotiRepository->eliminar($id);
-        return $result;
+        return $this->cotiRepository->eliminar($id);
     }
 
     public function role($id)
