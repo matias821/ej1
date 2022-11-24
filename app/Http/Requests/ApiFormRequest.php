@@ -31,6 +31,7 @@ class ApiFormRequest extends FormRequest
             'descripcion.required' => 'descripcion es requerida como valor para actualizar',
             'profesional_id.required' => 'profesional_id es requerido para la operacion solicitada',
             'estado.required' => 'estado es requrido',
+            'estado.numeric' => 'estado debe ser una valor numerico del 1 al 4',
         ];
     }
 

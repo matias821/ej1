@@ -16,9 +16,15 @@ class CotiResource extends JsonResource
 
     public function toArray($request)
     {
+        $success=0;$meta_data='';$errores='';$msg='';
+        if (isset($this->res["success"]) && $this->res["success"]==1){ $success=1; }
+        if (isset($this->res["data"])){$meta_data=$this->res["data"];}
+        if (isset($this->res["msg"])){$msg=$this->res["msg"];}
         return [
-            'id'      =>   $request->coti_id,
-            'res'     => $this->res,
+            'success'       =>     $success,
+            'meta_data'     =>     $meta_data,
+            'msg'           =>     $msg,
+            'errors'        =>     $errores
           ];
       //  return parent::toArray($request);
     }

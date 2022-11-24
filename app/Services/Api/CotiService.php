@@ -4,11 +4,9 @@ namespace App\Services\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Cotizacion;
-use DB;
 use Exception;
 use App\Repositories\CotiRepository;
-
+use DB;
 class CotiService extends Controller
 {
     private $cotiRepository;
@@ -23,21 +21,17 @@ class CotiService extends Controller
         $msg='';$status=0;
         $cotizaciones=$this->cotiRepository->listar($this->role(auth()->user()->id));
         $result=[
-            'status'=>$status,
+            'success'=>1,
             'msg'=>'' . $msg,
-            'data'=> response()->json([$cotizaciones])
+            'data'=> $cotizaciones
         ];
         return $result;
     }
 
     public function store($request)
     {
-        $result=[
-            'status'=>1,
-            'msg'=>'correcto'
-        ];
-        $this->cotiRepository->guardar($request);
-        return $result;
+        $repo_result=$this->cotiRepository->guardar($request);
+        return $repo_result;
     }
 
     public function show($id)
@@ -58,17 +52,13 @@ class CotiService extends Controller
             'status'=>1,
             'msg'=>'correcto'
         ];
-        $this->cotiRepository->update($id, $request);
+        $result=$this->cotiRepository->update($request,$id);
         return $result;
 
     }
-    public function Destroy($info)
+    public function Destroy($id)
     {
-        $result=[
-            'status'=>0,
-            'msg'=>'Las valoraciones no es posible eliminarlas',
-            'data'=> 'No tiene permisos para eliminar opiniones.'
-        ];
+        $result=$this->cotiRepository->eliminar($id);
         return $result;
     }
 

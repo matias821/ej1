@@ -17,7 +17,7 @@ class CotiRequest extends ApiFormRequest
         $arr["update"]=[
             'descripcion'                => 'required|string',
             'precio'                     => 'required|string',
-            'estado'                     => 'required|string'
+            'estado'                     => 'numeric'
            // 'comment_id'        => 'required|numeric'    se envia por get en url
         ];
         $arr["destroy"]=[

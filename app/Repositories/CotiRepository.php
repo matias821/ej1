@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Repositories;
-
 use Illuminate\Http\Request;
 use App\Models\Cotizacion;
 use App\Http\Controllers\Controller;
@@ -30,24 +28,94 @@ class CotiRepository extends Controller
         $coti->particular_id             = auth()->user()->id;
         $coti->estado_id                 = '1';
         $coti->num_ip                    = $_SERVER['REMOTE_ADDR'];
-        $coti->save();
-        return true;
+
+        try{
+            if ($coti->save()){
+                $result=[
+                    'success'=>1,
+                    'msg'=>'Cotizacion añadida correctamente',
+                    'data'=> 'Insercion correcta'//'Save ejecutado correctamente'
+                ];
+            }
+         }
+         catch(\Exception $e){
+            $result=[
+                'success'=>0,
+                'msg'=>'Ocurrio un error al crear una cotizacion',
+                'data'=> $e->getMessage()//'Save ejecutado correctamente'
+            ];
+
+         }
+       return $result;
     }
-    public function update($id, $request){                           //utilizado para insert y update.
+    public function update($request,$id){                           //utilizado para insert y update.
         try {
             $coti=Cotizacion::find($id);
-            $coti->descripcion=$request->descripcion;
-            $coti->precio=$request->precio;
-            $coti->estado=$request->estado;
-            $coti->save();
-            return true;
+            if ($coti){
+                if ($request->descripcion){
+                    $coti->descripcion=$request->descripcion;
+                }
+                if ($request->precio){
+                    $coti->precio=$request->precio;
+                }
+                if ($request->estado){
+                    $coti->estado_id=$request->estado;
+                }
+                $coti->save();
+                $result=[
+                    'success'=>1,
+                    'msg'=>'Actualizacion correcta',
+                    'data'=> 'Actualizacion correcta'
+                ];
+            }else{
+                $result=[
+                    'success'=>0,
+                    'msg'=>'La cotizacion indicada no existe o no tiene permisos para editarlo',
+                    'data'=> 'error'
+                ];
+            }
         } catch (Exception $e) {
-            $msg='No fue posible actualizar la valoracion';
-            return false;
+            $result=[
+                'success'=>0,
+                'msg'=>'Ocurrio un error al crear una cotizacion',
+                'data'=> $e->getMessage()//'Save ejecutado correctamente'
+            ];
         }
+        return $result;
     }
 
     public function eliminar($id){
-        return Cotizacion::where('id', $id)->delete();
+        try{
+            $cotizacion=Cotizacion::where('id', $id);
+            if ($cotizacion){
+                if ($cotizacion->delete()){
+                    $result=[
+                        'success'=>1,
+                        'msg'=>'Cotizacion eliminada correctamente',
+                        'data'=> 'Correcto'
+                    ];
+                }else{
+                    $result=[
+                        'success'=>0,
+                        'msg'=>'No fue posible eliminar la cotizacion solicitada',
+                        'data'=> 'error'
+                    ];
+                }
+            }else{
+                $result=[
+                    'success'=>0,
+                    'msg'=>'No fue encontrada la cotizacion que nos indica',
+                    'data'=> 'error'
+                ];
+            }
+
+        } catch (Exception $e) {
+            $result=[
+                'success'=>0,
+                'msg'=>'Ocurrio un error al eliminar una cotizacion',
+                'data'=> $e->getMessage()//'Save ejecutado correctamente'
+            ];
+        }
+        return $result;
     }
 }

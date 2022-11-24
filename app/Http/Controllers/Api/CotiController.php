@@ -43,9 +43,9 @@ class CotiController extends Controller
         return new CotiResource($this->cotiService->update($request,$id));
     }
 
-    public function destroy(CotiRequest $request, $id)
+    public function destroy($id)
     {
-        return new CotiResource($this->cotiService->Destroy($request));
+        return new CotiResource($this->cotiService->Destroy($id));
     }
 
     public function cotiGeo(Request $request){
