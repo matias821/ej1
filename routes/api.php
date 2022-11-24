@@ -24,9 +24,11 @@ Route::group(['middleware'=>'auth:api'], function(){
 
     Route::get('/profesionales_listar',                           'App\Http\Controllers\Api\UserDataController@profesionalesListar');
     Route::apiResource('/cotizaciones',                           'App\Http\Controllers\Api\CotiController');
-    Route::apiResource('/comentarios',                            'App\Http\Controllers\Api\ComentController');
 
     Route::post('/cotigeo',                                        'App\Http\Controllers\Api\CotiController@cotiGeo');
+    Route::apiResource('/comentarios',                             'App\Http\Controllers\Api\CommentController');
 });
+
+
 
 
