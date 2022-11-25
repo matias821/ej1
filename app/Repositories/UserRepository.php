@@ -61,7 +61,5 @@ class UserDataRepository extends Controller
         } catch (Exception $e) {
             return false;
         }
-
     }
-
 }
