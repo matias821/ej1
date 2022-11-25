@@ -5,9 +5,9 @@ use App\Http\Requests\CommentRequest;
 use App\Services\Api\CommentService;
 use App\http\Resources\CommentResource;
 use Illuminate\Http\Request;
-use App\Models\Comentarios;
-use App\Models\Cotizacion;
-use DB;
+//use App\Models\Comentarios;
+//use App\Models\Cotizacion;
+//use DB;
 use Exception;
 class CommentController extends Controller
 {

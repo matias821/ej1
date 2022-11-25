@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\UserData;
-use App\Models\User;
+//use App\Models\UserData;
+//use App\Models\User;
 use DB;
 use Exception;
 use App\Services\Api\UserDataService;
