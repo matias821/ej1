@@ -24,7 +24,7 @@ class ResultService extends Controller
     }
     public function mostrar($datos){
         // Asiganaciones basicas
-        if (isset($datos->success) && $datos->success==1){
+        if (isset($datos["success"]) && $datos["success"]==1){
             $this->result["success"]=1;
         }
         if ($this->result["success"]==0 && isset($datos) && $datos==true && !isset($datos["errores"])){

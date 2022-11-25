@@ -21,7 +21,7 @@ class UserDataResource extends JsonResource
             $success=$this->res["success"];
         }
         if (isset( $this->res["meta_data"])){
-            $meta_data= $this->res["meta_data"];
+            $meta_data=$this->res["meta_data"];
         }
         if (isset($this->res["msg"])){
             $msg=$this->res["msg"];
