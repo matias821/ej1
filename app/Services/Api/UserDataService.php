@@ -6,6 +6,7 @@ use App\Models\UserData;
 use App\Models\User;
 use DB;
 use Exception;
+use App\Repositories\UserRepository;
 use App\Repositories\UserDataRepository;
 use App\Repositories\DbRepository;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class UserDataService extends Controller
     {
         $this->userDataRepository=new UserDataRepository;
         $this->db=new DbRepository;
+        $this->userDataRepository=new UserRepository;
 
     }
 
@@ -96,22 +98,18 @@ class UserDataService extends Controller
         return $this->userDataRepository->getProf($this->db->role(auth()->user()->id));
     }
 
-
     public function roleGet()
     {
-       $role = User::find(auth()->user()->id)->Roles()->orderBy('name')->first();
+        return $this->userDataRepository->getRole();
+    }
 
-       $roleName='Role';
-       if (isset($role->name)){
-           $roleName=$role->name;
-       }
+    public function roleProfesional()
+    {
+        return $this->userDataRepository->roleProfesional();
+    }
 
-       $data = [
-        'status'=>1,
-        'msg'=>'Informacion de permisos correcta',
-        'js'=>'parent.document.getElementById("role").innerHTML="' . $roleName . '";',
-        'datos'=> $role
-        ];
-        return $data;
+    public function roleVisita()
+    {
+        return $this->userDataRepository->roleVisita();
     }
 }

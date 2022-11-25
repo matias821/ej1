@@ -8,39 +8,6 @@ use App\Models\User;
 class UserDataRepository extends Controller
 {
 
-    public function get(){
-        try{
-            $datos=DB::table('userdata')->where('user_id', auth()->user()->id)->first();
-            $dev='No fue ingresada informacion extra a este usuario';
-            if (isset($datos)){
-                $result=[
-                    'success'=>1,
-                    'msg'=>'Datos obtenidos',
-                    'data'=> $datos//'Save ejecutado correctamente'
-                ];
-            }
-            } catch (Exception $e) {
-            $result=[
-                'success'=>0,
-                'msg'=>'Error al obtener datos',
-                'data'=> 'Error al obtener datos'//'Save ejecutado correctamente'
-            ];
-        }
-        return $result;
-    }
-
-    public function getData(){
-        try{
-            $datos=DB::table('userdata')->where('user_id', auth()->user()->id)->first();
-            if (isset($datos)){
-            return $datos;
-            }
-            } catch (Exception $e) {
-                return false;
-            }
-        return false;
-    }
-
     public function getProf($rol){
         $profesionales = User::whereHas(
             'roles', function($q){
@@ -50,16 +17,50 @@ class UserDataRepository extends Controller
         return $profesionales;
     }
 
-    public function act($cliente,$arrCambios){    //ej cliente=27  arrCambios=array('nombre'=>'Perez2');
-        try{
-            $userData = UserData::where('user_id', $cliente)->update($arrCambios);
-            return [
-                'success'=>1,
-                'msg'=>'Actualizacion exitosa',
-                'data'=> 'Correcto'
-            ];;
-        } catch (Exception $e) {
-            return false;
+    public function getRoles(){
+        $user=User::find(auth()->user()->id)->Roles()->orderBy('name')->first();
+        $roleName='Role';
+        if (isset($role->name)){
+            $roleName=$role->name;
         }
+
+        $data = [
+         'status'=>1,
+         'msg'=>'Informacion de permisos correcta',
+         'js'=>'parent.document.getElementById("role").innerHTML="' . $roleName . '";',
+         'datos'=> $role
+         ];
+         return $data;
     }
+
+    public function roleProfesional()
+    {
+       $role = User::find($id=auth()->user()->id)->Roles()->orderBy('name')->first();
+       $role->pivot->role_id=2;
+       $role->pivot->save();
+
+       $data = [
+        'status'=>1,
+        'msg'=>'Usuario actualizado',
+        'js'=>'parent.document.getElementById("role").innerHTML="Profesional";',
+        'datos'=> $role
+        ];
+        return $data;
+    }
+
+    public function roleVisita()
+    {
+       $role = User::find($id=auth()->user()->id)->Roles()->orderBy('name')->first();
+       $role->pivot->role_id=1;
+       $role->pivot->save();
+
+       $data = [
+        'status'=>1,
+        'msg'=>'Usuario actualizado',
+        'js'=>'parent.document.getElementById("role").innerHTML="Visita";',
+        'datos'=> $role
+        ];
+        return $data;
+    }
+
 }
