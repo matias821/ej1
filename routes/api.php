@@ -17,15 +17,17 @@ Route::group(['middleware'=>'auth:api'], function(){
     Route::get('/user_basica',                                    'App\Http\Controllers\Api\UserDataController@userInfo');
     Route::get('/user_avanzada',                                  'App\Http\Controllers\Api\UserDataController@userAvanzada');
     Route::get('/user_foto',                                      'App\Http\Controllers\Api\UserDataController@userFoto');
-    Route::get('/user_actividad',                                 'App\Http\Controllers\Api\UserDataController@userActividad');
-    Route::post('/user_actividad',                                'App\Http\Controllers\Api\UserDataController@userActividadAct');
+    Route::get('/user_actividad',                                 'App\Http\Controllers\Api\UserDataController@userActivity');
+    Route::post('/user_actividad',                                'App\Http\Controllers\Api\UserDataController@userActivityAct');
     Route::post('/user_name',                                     'App\Http\Controllers\Api\UserDataController@userNameAct');
     Route::post('/user_foto',                                     'App\Http\Controllers\Api\UserDataController@userFotoAct');
+    Route::post('/user_domicilio',                                'App\Http\Controllers\Api\UserDataController@userDomicilioAct');
+    Route::post('/user_edad',                                     'App\Http\Controllers\Api\UserDataController@userEdadAct');
 
     Route::get('/profesionales_listar',                           'App\Http\Controllers\Api\UserDataController@profesionalesListar');
-    Route::apiResource('/cotizaciones',                           'App\Http\Controllers\Api\CotiController');
-
     Route::post('/cotigeo',                                        'App\Http\Controllers\Api\CotiController@cotiGeo');
+
+    Route::apiResource('/cotizaciones',                           'App\Http\Controllers\Api\CotiController');
     Route::apiResource('/comentarios',                             'App\Http\Controllers\Api\CommentController');
 });
 

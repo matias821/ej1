@@ -16,7 +16,13 @@ class ApiFormRequest extends FormRequest
 
     protected function failedValidation(Validator $validator): void                               // Cambio redireccionar a url anterior por mostrar errores de validacion
     {
-        $jsonResponse = response()->json(['errors' => $validator->errors()], 422);
+        //$jsonResponse = response()->json(['errors' => $validator->errors()], 422);
+        $jsonResponse = response()->json([
+            'success'=>0,
+            'msg'=>'Error en los datos enviados',
+            'meta_data'=>'',
+            'errores'=>$validator->errors()
+        ], 422);
         throw new HttpResponseException($jsonResponse);
     }
 
