@@ -39,10 +39,10 @@ class UserDataController extends Controller
         return new UserDataResource($this->resultService->mostrar($this->userDataService->userActivityAct($request)));
     }
 
-    function userNameAct(Request $request){
+    function userNameAct(UserDataRequest $request){
         return new UserDataResource($this->resultService->mostrar($this->userDataService->userNameAct($request)));
     }
-    function userFotoAct(Request $request){
+    function userFotoAct(UserDataRequest $request){
         return new UserDataResource($this->resultService->mostrar($this->userDataService->userFotoAct($request)));
     }
 
