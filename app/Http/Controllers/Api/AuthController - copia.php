@@ -14,6 +14,25 @@ class AuthController extends Controller
 {
 
 
+    public function roleGet()
+    {
+       $id=auth()->user()->id;
+       $role = User::find($id)->Roles()->orderBy('name')->first();
+
+       $roleName='Role';
+       if (isset($role->name)){
+           $roleName=$role->name;
+       }
+
+       $data = [
+        'status'=>1,
+        'msg'=>'Informacion de permisos correcta',
+        'js'=>'parent.document.getElementById("role").innerHTML="' . $roleName . '";',
+        'datos'=> $role
+        ];
+        return $data;
+    }
+
     public function roleProfesional()
     {
        $id=auth()->user()->id;
@@ -125,5 +144,8 @@ class AuthController extends Controller
         ];
         return response()->json([$data]);
     }
-
+    public function test(request $request)
+    {
+        return 'testing';
+    }
 }

@@ -33,13 +33,12 @@ class ResultService extends Controller
         if (isset($datos["msg"])){
             $this->result["msg"]=$datos["msg"];
         }
-        if (isset($datos["data"]) && isset($datos["data"]["success"])){
-          //  $this->result["meta_data"]=$datos["data"];
+        if (isset($datos["data"])){
+            $this->result["meta_data"]=$datos["data"];
         }
         if (isset($datos["errores"])){
             $this->result["errores"]=$datos["errores"];
         }
-
         //correcciones
         if ($this->result["success"]==1 and $this->result["msg"]==''){
             $this->result["msg"]='Solicitud realizada correctamente';

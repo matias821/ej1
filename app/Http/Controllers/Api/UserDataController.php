@@ -49,4 +49,17 @@ class UserDataController extends Controller
     function profesionalesListar(){
           return new UserDataResource($this->resultService->mostrar($this->userDataService->profesionalesListar()));
     }
+
+    public function roleGet()
+    {
+        return new UserDataResource($this->resultService->mostrar($this->userDataService->roleGet($request)));
+    }
+    public function roleProfesional()
+    {
+        return new UserDataResource($this->resultService->mostrar($this->userDataService->roleProfesional($request)));
+    }
+    public function roleVisita()
+    {
+        return new UserDataResource($this->resultService->mostrar($this->userDataService->rolevisita($request)));
+    }
 }

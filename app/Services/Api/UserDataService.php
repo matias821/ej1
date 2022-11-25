@@ -97,4 +97,21 @@ class UserDataService extends Controller
     }
 
 
+    public function roleGet()
+    {
+       $role = User::find(auth()->user()->id)->Roles()->orderBy('name')->first();
+
+       $roleName='Role';
+       if (isset($role->name)){
+           $roleName=$role->name;
+       }
+
+       $data = [
+        'status'=>1,
+        'msg'=>'Informacion de permisos correcta',
+        'js'=>'parent.document.getElementById("role").innerHTML="' . $roleName . '";',
+        'datos'=> $role
+        ];
+        return $data;
+    }
 }

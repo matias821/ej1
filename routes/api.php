@@ -7,9 +7,9 @@ Route::post('/register',                                          'App\Http\Cont
 
 Route::group(['middleware'=>'auth:api'], function(){
 
-    Route::get('/role_profesional',                               'App\Http\Controllers\Api\AuthController@roleProfesional');
-    Route::get('/role_visita',                                    'App\Http\Controllers\Api\AuthController@roleVisita');
-    Route::get('/role_get',                                       'App\Http\Controllers\Api\AuthController@roleGet');
+    Route::get('/role_profesional',                               'App\Http\Controllers\Api\UserDataController@roleProfesional');
+    Route::get('/role_visita',                                    'App\Http\Controllers\Api\UserDataController@roleVisita');
+    Route::get('/role_get',                                       'App\Http\Controllers\Api\UserDataController@roleGet');
 
     Route::get('info',                                            'App\Http\Controllers\Api\AuthController@info');
     Route::post('/testOauth',                                     'Api\AuthController@testOauth');
